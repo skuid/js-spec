@@ -44,6 +44,16 @@ class LifecycleHandler {
             }
         ]
     }
+
+    registerSigTermHandler(server) { 
+        process.on("SIGTERM", () => {
+            this.ready = false;
+            server.log(["fatal"], "Got SIGTERM. Graceful shutdown start");
+            server.stop({ timeout: 5 * 1000}, () => {
+                process.exit(0);
+            });
+        });
+    }
 }
 
 module.exports = {

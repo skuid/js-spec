@@ -30,4 +30,7 @@ require("./server/registrations/metrics")(server);
 // Register lifecycle/readyness handlers
 server.route(Lifecycle.handler.endpoints());
 
+// Register sigterm handler for health checks.
+Lifecycle.handler.registerSigTermHandler(server);
+
 module.exports = server;
