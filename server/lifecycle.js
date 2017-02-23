@@ -8,14 +8,13 @@ class LifecycleHandler {
     }
 
     endpoints() {
-        console.log(this);
         return [
             {
                 method: 'GET',
                 path: '/ready',
                 handler: (request, reply) => {
                     if (this.ready) {
-                       reply("WE READY!"); 
+                       reply(200, "WE READY!"); 
                     } else {
                        reply("WE NOT READY!");
                     }
