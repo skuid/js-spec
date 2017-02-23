@@ -2,7 +2,7 @@
 
 const Hapi = require('hapi');
 const Good = require('good');
-const Lifecycle = require('./server/lifecycle')
+const Lifecycle = require('./server/lifecycle');
 
 const SKUID_ENV = process.env.SKUID_ENVIRONMENT;
 
@@ -24,7 +24,8 @@ server.route({
 });
 
 // Register logging
-require("./server/registrations/logging")(server)
+require("./server/registrations/logging")(server);
+require("./server/registrations/metrics")(server);
 
 // Register lifecycle/readyness handlers
 server.route(Lifecycle.handler.endpoints());
