@@ -1,5 +1,6 @@
 'use strict';
 
+const Boom = require('boom');
 
 class LifecycleHandler {
     constructor() {
@@ -14,9 +15,9 @@ class LifecycleHandler {
                 path: '/ready',
                 handler: (request, reply) => {
                     if (this.ready) {
-                       reply(200, "WE READY!"); 
+                       reply("WE READY!"); 
                     } else {
-                       reply("WE NOT READY!");
+                       reply(Boom.serverUnavailable('Server is not ready.'));
                     }
                 }
             },{
@@ -26,7 +27,7 @@ class LifecycleHandler {
                     if (this.healthy) {
                        reply("WE HEALTHY!"); 
                     } else {
-                       reply("WE NOT HEALTHY!");
+                       reply(Boom.serverUnavailable('Server is not healthy.'));
                     }
                 }
             },{
@@ -38,7 +39,7 @@ class LifecycleHandler {
                     } else {
                         this.ready = true;
                     }
-                    reply("Readyness bit flipped.")
+                    reply("Readyness bit flipped.");
                 }
             }
         ]
