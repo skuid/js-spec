@@ -2,7 +2,7 @@
 
 const _ = require("lodash");
 
-function runServer(serverOptions) {
+function getDefaultServer(serverOptions) {
 
 	const Server = require("./server");
 
@@ -11,13 +11,20 @@ function runServer(serverOptions) {
 		port: 3000
 	}));
 
-	Server.start((err) => {
+	return Server;
+}
+
+function runServer(server) {
+	server.start((err) => {
 		if(err) {
-			Server.log(["error"], "Failed to start server");
+			server.log(["error"], "Failed to start server");
 			throw err;
 		}
-		Server.log(["info"], "Starting server at " + Server.info.uri);
+		server.log(["info"], "Starting server at " + server.info.uri);
 	});
 }
 
-module.exports = runServer;
+module.exports = {
+	getDefaultServer,
+	runServer,
+};
