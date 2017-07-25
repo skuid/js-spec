@@ -9,11 +9,6 @@ const SKUID_ENV = process.env.SKUID_ENVIRONMENT;
 // Create a server with a host and port
 const server = new Hapi.Server();
 
-server.connection({
-    host: 'localhost',
-    port: 3000
-});
-
 // Add the route
 server.route({
     method: 'GET',
