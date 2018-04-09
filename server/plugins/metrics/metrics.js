@@ -4,12 +4,39 @@ const prom = require("prom-client");
 const Utils = require("./utils");
 
 const metric = {
-	version: new prom.Gauge("version_info", "The current git commit and node version.", ["commit", "node_version"]),
+	version: new prom.Gauge({
+		name: "version_info",
+		help: "The current git commit and node version.",
+		labelNames: [
+			"commit",
+			"node_version",
+		],
+	}),
 	http: {
 		requests: {
-			duration: new prom.Summary("http_request_duration_milliseconds", "request duration in milliseconds", ["method", "path", "status"]),
-			buckets: new prom.Histogram("http_request_buckets_milliseconds", "request duration buckets in milliseconds. Bucket size set to 500 and 2000 ms to enable apdex calculations with a T of 300ms", ["method", "path", "status"], { buckets: [ 500, 2000 ] })
-		}
+			duration: new prom.Summary({
+				name: "http_request_duration_milliseconds",
+				help: "request duration in milliseconds",
+				labelNames: [
+					"method",
+					"path",
+					"status",
+				],
+			}),
+			buckets: new prom.Histogram({
+				name: "http_request_buckets_milliseconds",
+				help: "request duration buckets in milliseconds. Bucket size set to 500 and 2000 ms to enable apdex calculations with a T of 300ms",
+				labelNames: [
+					"method",
+					"path",
+					"status",
+				],
+				buckets: [
+					500,
+					2000,
+				],
+			}),
+		},
 	}
 };
 
